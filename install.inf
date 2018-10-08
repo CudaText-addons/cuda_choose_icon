@@ -1,0 +1,11 @@
+[info]
+title=Choose Icon
+desc=Helper dialog to choose a) icon set, b) icon from iconset dir
+type=cudatext-plugin
+subdir=cuda_choose_icon
+homepage=https://github.com/CudaText-addons/cuda_choose_icon
+
+[item2]
+section=commands
+caption=Choose Icon
+method=dialog
