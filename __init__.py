@@ -18,7 +18,7 @@ class Command:
     def get_iconset(self, basedir):
 
         dirs = sorted(os.listdir(basedir))
-        dirs = [d for d in dirs if '_' in d and 'x' in d]
+        dirs = [d for d in dirs if '_' in d]
         res = dlg_menu(MENU_LIST, dirs, caption='Choose icon set')
         if res is not None:
             return os.path.join(basedir, dirs[res])
@@ -150,7 +150,7 @@ class Command:
         self.update_filter()
 
         dlg_proc(self.h_dlg, DLG_SHOW_MODAL)
-        return self.result
+        return self.result, self.icon_size
 
 
     def dialog(self):
