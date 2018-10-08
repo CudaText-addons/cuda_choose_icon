@@ -7,7 +7,7 @@ CHOOSE_COLOR_LIST = 0xFFFFFF
 CHOOSE_COLOR_SEL = 0xE0A0A0
 
 
-class DlgChooseIcon:
+class DialogChooseIcon:
 
     def __init__(self):
 

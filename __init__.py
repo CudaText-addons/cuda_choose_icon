@@ -1,12 +1,12 @@
 import os
 from cudatext import *
-from .dialog_choose_icon import DlgChooseIcon
+from .dlg_choose_icon import DialogChooseIcon
 
 class Command:
 
     def __init__(self):
     
-        self.dlg = DlgChooseIcon()
+        self.dlg = DialogChooseIcon()
 
     def dialog(self):
 
