@@ -11,30 +11,34 @@ img = image_proc(0, IMAGE_CREATE, value=0)
 
 class Command:
 
-    icon_size = 32
     filter = ''
     files = []
     filedir = ''
+    icon_size = 32
     result = ''
+
+    def __init__(self):
+
+        self.h_dlg = self.init_dlg()
 
 
     def get_iconset(self, basedir):
-    
+
         dirs = sorted(os.listdir(basedir))
         dirs = [d for d in dirs if '_' in d and 'x' in d]
         res = dlg_menu(MENU_LIST, dirs, caption='Choose icon set')
         if res is not None:
             return os.path.join(basedir, dirs[res])
-            
-    
+
+
     def get_files(self, basedir):
-    
+
         ff = sorted(os.listdir(basedir))
         ff = [os.path.join(basedir, f) for f in ff if f.endswith('.png')]
         #print('files:', ff)
         return ff
 
-    
+
     def update_filter(self):
         dlg_proc(self.h_dlg, DLG_CTL_PROP_SET, name='filter', prop={'cap': 'Filter: '+self.filter})
 
@@ -133,28 +137,34 @@ class Command:
         return h
 
 
-    def __init__(self):
-    
-        self.h_dlg = self.init_dlg()
+    def choose_icon(self, basedir):
+
+        self.result = ''
+        self.filter = ''
+        self.files = []
+        self.filedir = self.get_iconset(basedir)
+        if not self.filedir: return
+
+        try:
+            self.icon_size = int(self.filedir[-2:])
+        except:
+            self.icon_size = 32
+
+        listbox_proc(self.h_list, LISTBOX_SET_ITEM_H, index=max(18, self.icon_size))
+
+        self.files = self.get_files(self.filedir)
+        if not self.files: return
+
+        self.update_filter()
+
+        dlg_proc(self.h_dlg, DLG_SHOW_MODAL)
+        return self.result
 
 
     def dialog(self):
 
-        dir = os.path.join(os.path.dirname(__file__), 'icons')    
-        self.filedir = self.get_iconset(dir)
-        if not self.filedir: return
-        
-        s = self.filedir[-2:]
-        self.icon_size = int(s)
-        listbox_proc(self.h_list, LISTBOX_SET_ITEM_H, index=max(18, self.icon_size))
+        dir = os.path.join(os.path.dirname(__file__), 'icons')
+        res = self.choose_icon(dir)
+        if res:
+            print('Chosen icon:', res)
 
-        self.files = self.get_files(self.filedir)
-        if not self.files: return 
-
-        self.filter = ''        
-        self.update_filter()
-        
-        dlg_proc(self.h_dlg, DLG_SHOW_MODAL)
-        if self.result:
-            print('Result:', self.result)
-            return self.result
