@@ -6,8 +6,6 @@ FORMSIZEY = 580
 COLORLIST = 0xFFFFFF
 COLORSEL = 0xE0A0A0
 
-img = image_proc(0, IMAGE_CREATE, value=0)
-
 
 class Command:
 
@@ -19,6 +17,7 @@ class Command:
 
     def __init__(self):
 
+        self.img = image_proc(0, IMAGE_CREATE, value=0)
         self.h_dlg = self.init_dlg()
 
 
@@ -79,7 +78,6 @@ class Command:
 
 
     def callback_listbox_drawitem(self, id_dlg, id_ctl, data='', info=''):
-        global img
 
         id_canvas = data['canvas']
         index = data['index']
@@ -101,8 +99,8 @@ class Command:
             x = rect[0] + self.icon_size + 6,
             y = (rect[1]+rect[3]-size[1])//2 )
 
-        image_proc(img, IMAGE_LOAD, value=os.path.join(self.filedir, item_text+'.png'))
-        image_proc(img, IMAGE_PAINT_SIZED, value=(id_canvas, rect[0], rect[1], rect[0]+self.icon_size, rect[1]+self.icon_size))
+        image_proc(self.img, IMAGE_LOAD, value=os.path.join(self.filedir, item_text+'.png'))
+        image_proc(self.img, IMAGE_PAINT_SIZED, value=(id_canvas, rect[0], rect[1], rect[0]+self.icon_size, rect[1]+self.icon_size))
 
 
     def init_dlg(self):
