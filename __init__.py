@@ -1,19 +1,13 @@
 import os
 from cudatext import *
 
-FORMSIZEX = 300
-FORMSIZEY = 580
-COLORLIST = 0xFFFFFF
-COLORSEL = 0xE0A0A0
+CHOOSE_FORM_W = 300
+CHOOSE_FORM_H = 580
+CHOOSE_COLOR_LIST = 0xFFFFFF
+CHOOSE_COLOR_SEL = 0xE0A0A0
 
 
 class Command:
-
-    filter = ''
-    files = []
-    filedir = ''
-    icon_size = 32
-    result = ''
 
     def __init__(self):
 
@@ -86,9 +80,9 @@ class Command:
         item_text = listbox_proc(self.h_list, LISTBOX_GET_ITEM, index=index)[0]
 
         if index==index_sel:
-            back_color = COLORSEL
+            back_color = CHOOSE_COLOR_SEL
         else:
-            back_color = COLORLIST
+            back_color = CHOOSE_COLOR_LIST
 
         canvas_proc(id_canvas, CANVAS_SET_BRUSH, color=back_color, style=BRUSH_SOLID)
         canvas_proc(id_canvas, CANVAS_RECT_FILL, x=rect[0], y=rect[1], x2=rect[2], y2=rect[3])
@@ -107,8 +101,8 @@ class Command:
 
         h=dlg_proc(0, DLG_CREATE)
         dlg_proc(h, DLG_PROP_SET, prop={'cap':'Choose icon',
-          'w':FORMSIZEX,
-          'h':FORMSIZEY,
+          'w':CHOOSE_FORM_W,
+          'h':CHOOSE_FORM_H,
           'on_key_down': self.callback_keydown,
           'keypreview': True
           })
